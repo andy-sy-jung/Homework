@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous">
+    </script>
+
+    <title>Shopping Mall Item</title>
+
+    <style>
+        .wrap{
+            width: 600px;
+            height:450px;
+            margin: 10px auto;
+        }
+
+        .backgroundColor{
+            background-color: aliceblue;
+        }
+
+        .wrap > img{
+            width: 100%;
+            height: 100%;
+            mix-blend-mode: darken;
+        }
+
+        .price{
+            font-size: 12px;
+            font-family: 'Stylish', sans-serif;
+        }
+
+        .title{
+            font-size: 25px;
+            font-family: "Roboto Light";
+
+        }
+
+        .text{
+            font-size: 10px;
+            font-family: 'Stylish', sans-serif;
+        }
+
+        .buttonLayout{
+            text-align: center;
+        }
+
+        .highlight{
+            color: blue;
+        }
+    </style>
+</head>
+
+<script>
+
+    function onOrder(){
+        if(document.getElementById("input_address").value == "")
+            alert("Please enter an address")
+        else if(document.getElementById("input_name").value == "")
+            alert("Please enter your name")
+        else if(isNaN(document.getElementById("input_select").value))
+            alert("Please select the number of items you would like to order")
+        else if(document.getElementById("input_number").value == "")
+            alert("Please enter your phone number")
+        else
+            alert("Order successfully submitted")
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            type:"GET",
+            url: "https://api.manana.kr/exchange/rate.json",
+            data: {},
+            success: function(response){
+                let exchange = response[1]["rate"];
+                let tempHTML = `<p class="text highlight" style="padding-top: 10px">USD to KRW: ₩${exchange}</p>`;
+                $('#body-text').append(tempHTML);
+            },
+        })
+    });
+
+</script>
+
+<body class="backgroundColor">
+<div class="wrap">
+    <img  src="../img/Dunlop-Hyperfibre-Evolution-Pro.jpg" alt="Image not loading"/>
+    <span class="title">Dunlop Hyperfibre+ Evolution Pro </span>
+    <span class="price"> Price: $130 per item</span>
+    <p class="text" id="body-text">The Dunlop Hyperfibre+ Evolution Pro is the racket of Nick Matthew, “the Wolf”,
+        the recently-retired legend of the game. It has sort of a hybrid shape,
+        with the strings extending down through the throat, but not all the way. </p>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Name</span>
+        </div>
+        <input type="text" class="form-control" id="input_name" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="input_select">Quantity</label>
+        </div>
+        <select class="custom-select" id="input_select">
+            <option selected>Choose number of items for shipping</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon2">Address</span>
+        </div>
+        <input type="text" class="form-control" id="input_address" aria-label="Username"
+               aria-describedby="basic-addon2">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">Phone Number</span>
+        </div>
+        <input type="text" class="form-control" id="input_number" aria-label="Username"
+               aria-describedby="basic-addon3">
+    </div>
+    <div class="buttonLayout">
+        <button onclick="onOrder()" type="button" class="btn btn-primary">Submit Order</button>
+    </div>
+</div>
+</body>
+</html>
